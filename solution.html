@@ -1,0 +1,62 @@
+<!-- define that the document is Html document -->
+<!DOCTYPE html>
+
+<html>
+<head>
+	<!-- write the title of the page  -->
+	<title>Covert Gregorian Date to Hebrew Date </title>
+	
+	<!-- in script we define the JavaScript code -->
+	<script>
+	
+		<!-- define function "Dateconvertion" . it will make the convertion from Gregorian Date to Hebrew date -->
+		<!-- The function triggered when we click the button convert  -->
+		
+		function Dateconvertion() {
+		
+			<!-- take the value (that user put)from the input field and put it in date_g variable -->
+			
+			var date_g = document.getElementById("gregorianD").value;
+			
+			<!-- build the API url for converting between Gregorian and Hebrew date -->
+			
+			var url_api = "https://www.hebcal.com/converter?cfg=json&date=" + date_g + "&g2h=1&strict=1";
+			
+			<!-- make HTTP request to the hebcal.com API , and lets handle the response  -->
+			fetch(url_api)
+				.then(response => response.json())
+				
+				<!-- extract the Hebrew date from the response data and put it in the date_h variable.  -->
+				.then(data => {
+								var date_h = data.hebrew;
+								document.getElementById("hebrewD").textContent = date_h;
+								})
+								
+				<!-- handle the errors.  -->
+				.catch(error => {
+								console.error('The Error is :', error);
+								});
+								
+		}
+	
+	</script>
+
+</head>
+<body>
+	<!-- write title in the top of html page  -->
+	<h1>Covert Gregorian Date to Hebrew Date</h1>
+	
+	<!-- build a label and input field in order to get the Gregorian date from user  -->
+	<label for="gregorianD">Please Enter Gregorian Date:</label>
+	<input type="date" id="gregorianD">
+	<br>
+	
+	<!-- build a button that will call the Dateconvertion() function when clicking on it -->
+	<button onclick="Dateconvertion()">convert</button>
+	<br>
+	
+	<!-- paragraph element , its id "hebrewD" to display the converted Hebrew date. -->
+	<p id="hebrewD"></p>
+
+</body>
+</html>
